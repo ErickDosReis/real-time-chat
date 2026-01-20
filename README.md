@@ -18,6 +18,7 @@ A. Configuração da Raiz (Backend/Infra): Define o segredo do JWT utilizado pel
 
 PowerShell
 Set-Content -Path ".env" -Value "JWT_SECRET=chave_secreta_no_minimo_32_caracteres"
+
 B. Configuração do Frontend (Nginx Proxy): Define as rotas relativas para que o Nginx faça o proxy reverso corretamente.
 
 PowerShell
