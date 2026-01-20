@@ -11,17 +11,21 @@ Git (opcional, para clonar o repositório).
 ⚡ Guia de Execução Rápida (Docker)
 Siga os passos abaixo para subir todo o ambiente (Banco, RabbitMQ, API e Frontend) com um único comando.
 
-1. Configuração de Variáveis de Ambiente
-   O projeto utiliza dois arquivos .env para segurança e configuração. Execute os comandos abaixo no PowerShell (na raiz do projeto) para criá-los automaticamente:
 
-A. Configuração da Raiz (Backend/Infra): Define o segredo do JWT utilizado pelo Backend.
+## 1. Configuração de Variáveis de Ambiente
 
-PowerShell
+O projeto utiliza dois arquivos `.env` para segurança e configuração. Execute os comandos abaixo no **PowerShell** (na raiz do projeto) para criá-los automaticamente:
+
+### A. Configuração da Raiz (Backend/Infra)
+Define o segredo do JWT utilizado pelo Backend.
+
+```powershell
 Set-Content -Path ".env" -Value "JWT_SECRET=chave_secreta_no_minimo_32_caracteres"
-
+```
 B. Configuração do Frontend (Nginx Proxy): Define as rotas relativas para que o Nginx faça o proxy reverso corretamente.
 
-PowerShell
+
+```PowerShell
 $envContent = @"
 VITE_API_HOST_AUTH=/api/auth
 VITE_API_HOST_USER=/api/users
@@ -29,6 +33,7 @@ VITE_API_HOST_CHAT=/api/chatmessage
 "@
 
 Set-Content -Path "frontend\ChatAppFront\.env" -Value $envContent
+```
 
 2. Subindo os Containers
    Na raiz do projeto, execute:
@@ -82,19 +87,32 @@ docker compose logs -f
 Limpeza Total ("Nuclear")
 Para parar tudo, apagar os containers e resetar o banco de dados (apaga todos os dados):
 
-Bash
+
+```Bash
 docker compose down -v --rmi local
+```
 Reconstruir sem cache
 Se você alterou pacotes npm ou nuget:
 
-Bash
+
+```Bash
 docker builder prune -f
 docker compose up -d --build
+```
 
 🧪 Como Testar
 Acesse http://localhost:5173.
 
 Clique em "Cadastre-se" e crie um usuário (ex: User1).
+
+O Backend utiliza ASP.NET Core Identity, portanto o cadastro de usuários segue requisitos mínimos de segurança.
+
+Ao registrar um usuário, a senha deve conter obrigatoriamente:
+-No mínimo 6 caracteres
+-Pelo menos 1 letra maiúscula (A-Z)
+-Pelo menos 1 letra minúscula (a-z)
+-Pelo menos 1 número (0-9)
+-Pelo menos 1 caractere especial (ex: ! @ # $ % *)
 
 Faça Login.
 
